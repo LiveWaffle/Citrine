@@ -1,0 +1,92 @@
+{
+  "format": 1,
+  "restore": {
+    "/home/andrewgilliam/RiderProjects/Citrine/citrine/citrine/citrine.csproj": {}
+  },
+  "projects": {
+    "/home/andrewgilliam/RiderProjects/Citrine/citrine/citrine/citrine.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/home/andrewgilliam/RiderProjects/Citrine/citrine/citrine/citrine.csproj",
+        "projectName": "citrine",
+        "projectPath": "/home/andrewgilliam/RiderProjects/Citrine/citrine/citrine/citrine.csproj",
+        "packagesPath": "/home/andrewgilliam/.nuget/packages/",
+        "outputPath": "/home/andrewgilliam/RiderProjects/Citrine/citrine/citrine/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/home/andrewgilliam/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net10.0"
+        ],
+        "sources": {
+          "/usr/lib/dotnet/library-packs": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net10.0": {
+            "framework": "net10.0",
+            "targetAlias": "net10.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "all"
+        },
+        "SdkAnalysisLevel": "10.0.100"
+      },
+      "frameworks": {
+        "net10.0": {
+          "framework": "net10.0",
+          "targetAlias": "net10.0",
+          "dependencies": {
+            "Avalonia": {
+              "target": "Package",
+              "version": "[12.1.4, )"
+            },
+            "Avalonia.Desktop": {
+              "target": "Package",
+              "version": "[12.1.4, )"
+            },
+            "Avalonia.Fonts.Inter": {
+              "target": "Package",
+              "version": "[12.1.4, )"
+            },
+            "Avalonia.Themes.Fluent": {
+              "target": "Package",
+              "version": "[12.1.4, )"
+            },
+            "AvaloniaUI.DiagnosticsSupport": {
+              "target": "Package",
+              "version": "[2.2.3, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/10.0.112/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

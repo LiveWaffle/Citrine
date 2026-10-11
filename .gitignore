@@ -1,3 +1,16 @@
+# .NET / Avalonia generated output
+**/bin/
+**/obj/
+**/.vs/
+TestResults/
+*.user
+*.suo
+
+# Local Rider settings (keep shared project settings)
+**/.idea/**/workspace.xml
+**/.idea/**/tasks.xml
+**/.idea/**/shelf/
+
 # Prerequisites
 *.d
 
@@ -53,3 +66,22 @@ dkms.conf
 
 # debug information files
 *.dwo
+
+# React / Node port
+**/node_modules/
+client/dist/
+server/data/
+*.sqlite
+*.sqlite-shm
+*.sqlite-wal
+*.log
+.env
+.env.local
+.env.*
+!.env.example
+!.env.sample
+*.db
+*.db-shm
+*.db-wal
+.DS_Store
+Thumbs.db

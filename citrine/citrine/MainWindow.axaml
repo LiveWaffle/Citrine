@@ -1,9 +1,833 @@
 <Window xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:models="clr-namespace:citrine.Models"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        mc:Ignorable="d"
+        d:DesignWidth="1240"
+        d:DesignHeight="780"
         x:Class="citrine.MainWindow"
-        Title="citrine">
-    Welcome to Avalonia!
+        Title="Citrine"
+        Width="1240"
+        Height="780"
+        MinWidth="1040"
+        MinHeight="680"
+        RequestedThemeVariant="Light"
+        Foreground="{StaticResource AppTextPrimaryBrush}"
+        Background="{StaticResource AppBackgroundBrush}"
+        FontFamily="Inter, Segoe UI, Arial">
+    <Window.Resources>
+        <SolidColorBrush x:Key="AppBackgroundBrush" Color="#FFF7F1"/>
+        <SolidColorBrush x:Key="AppSurfaceBrush" Color="#FFFFFF"/>
+        <SolidColorBrush x:Key="AppSurfaceAltBrush" Color="#EAF9FC"/>
+        <SolidColorBrush x:Key="AppTextPrimaryBrush" Color="#164D66"/>
+        <SolidColorBrush x:Key="AppTextSecondaryBrush" Color="#246B8B"/>
+        <SolidColorBrush x:Key="AppBorderBrush" Color="#A5DEE6"/>
+        <SolidColorBrush x:Key="AppAccentBrush" Color="#FF8030"/>
+        <SolidColorBrush x:Key="AppAccentHighBrush" Color="#FF9F30"/>
+        <SolidColorBrush x:Key="AppAccentDeepBrush" Color="#CC4E00"/>
+        <SolidColorBrush x:Key="AppInfoBrush" Color="#3080A6"/>
+        <SolidColorBrush x:Key="AppDangerBrush" Color="#FF306B"/>
+        <SolidColorBrush x:Key="TransparentBrush" Color="Transparent"/>
+    </Window.Resources>
+
+    <Window.Styles>
+        <Style Selector="TextBlock.pageTitle">
+            <Setter Property="FontSize" Value="24"/>
+            <Setter Property="FontWeight" Value="700"/>
+            <Setter Property="Foreground" Value="{StaticResource AppTextPrimaryBrush}"/>
+            <Setter Property="LineHeight" Value="30"/>
+        </Style>
+        <Style Selector="TextBlock.sectionTitle">
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontWeight" Value="700"/>
+            <Setter Property="Foreground" Value="{StaticResource AppTextPrimaryBrush}"/>
+        </Style>
+        <Style Selector="TextBlock.body">
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Foreground" Value="{StaticResource AppTextSecondaryBrush}"/>
+            <Setter Property="LineHeight" Value="20"/>
+        </Style>
+        <Style Selector="TextBlock.caption">
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Foreground" Value="{StaticResource AppTextSecondaryBrush}"/>
+            <Setter Property="LineHeight" Value="16"/>
+        </Style>
+        <Style Selector="Border.panel">
+            <Setter Property="Background" Value="{StaticResource AppSurfaceBrush}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource AppBorderBrush}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CornerRadius" Value="4"/>
+        </Style>
+        <Style Selector="Border.altPanel">
+            <Setter Property="Background" Value="{StaticResource AppSurfaceAltBrush}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource AppBorderBrush}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CornerRadius" Value="4"/>
+        </Style>
+        <Style Selector="Button.primary">
+            <Setter Property="Background" Value="{StaticResource AppAccentDeepBrush}"/>
+            <Setter Property="Foreground" Value="{StaticResource AppSurfaceBrush}"/>
+            <Setter Property="CornerRadius" Value="4"/>
+            <Setter Property="Padding" Value="14,9"/>
+            <Setter Property="FontWeight" Value="700"/>
+        </Style>
+        <Style Selector="Button.secondary">
+            <Setter Property="Background" Value="{StaticResource AppSurfaceBrush}"/>
+            <Setter Property="Foreground" Value="{StaticResource AppTextPrimaryBrush}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource AppBorderBrush}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CornerRadius" Value="4"/>
+            <Setter Property="Padding" Value="13,8"/>
+            <Setter Property="FontWeight" Value="600"/>
+        </Style>
+        <Style Selector="Button.nav">
+            <Setter Property="Background" Value="{StaticResource TransparentBrush}"/>
+            <Setter Property="Foreground" Value="{StaticResource AppTextPrimaryBrush}"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="CornerRadius" Value="2"/>
+            <Setter Property="Padding" Value="12,10"/>
+            <Setter Property="FontWeight" Value="600"/>
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+        </Style>
+        <Style Selector="Button.nav:pointerover">
+            <Setter Property="Background" Value="{StaticResource AppSurfaceAltBrush}"/>
+        </Style>
+        <Style Selector="Button.nav.active">
+            <Setter Property="Background" Value="{StaticResource AppSurfaceAltBrush}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource AppAccentBrush}"/>
+            <Setter Property="BorderThickness" Value="3,0,0,0"/>
+        </Style>
+        <Style Selector="TextBox, ComboBox">
+            <Setter Property="Background" Value="{StaticResource AppSurfaceBrush}"/>
+            <Setter Property="Foreground" Value="{StaticResource AppTextPrimaryBrush}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource AppBorderBrush}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CornerRadius" Value="3"/>
+        </Style>
+        <Style Selector="ListBox">
+            <Setter Property="Background" Value="{StaticResource AppSurfaceBrush}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource AppBorderBrush}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CornerRadius" Value="4"/>
+        </Style>
+    </Window.Styles>
+
+    <Grid RowDefinitions="Auto,*" Background="{StaticResource AppBackgroundBrush}">
+        <Border x:Name="MessageBanner" IsVisible="False" Padding="18,10"
+                Background="{StaticResource AppSurfaceAltBrush}"
+                BorderBrush="{StaticResource AppBorderBrush}" BorderThickness="0,0,0,1">
+            <TextBlock x:Name="MessageText" Classes="body" TextWrapping="Wrap"/>
+        </Border>
+    <Grid x:Name="AppLayout" Grid.Row="1" ColumnDefinitions="236,*"
+          Background="{StaticResource AppBackgroundBrush}">
+        <Border Background="{StaticResource AppSurfaceBrush}"
+                BorderBrush="{StaticResource AppBorderBrush}"
+                BorderThickness="0,0,1,0"
+                Padding="18,22">
+            <Grid RowDefinitions="*,Auto" RowSpacing="12">
+                <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+                <StackPanel Spacing="18">
+                    <StackPanel Orientation="Horizontal" Spacing="12">
+                        <Border Width="34"
+                                Height="34"
+                                Background="{StaticResource AppSurfaceBrush}"
+                                BorderBrush="{StaticResource AppAccentBrush}"
+                                BorderThickness="2"
+                                CornerRadius="4">
+                            <TextBlock Text="C"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"
+                                       FontSize="19"
+                                       FontWeight="800"
+                                       Foreground="{StaticResource AppAccentDeepBrush}"/>
+                        </Border>
+                        <StackPanel>
+                            <TextBlock Text="Citrine"
+                                       FontSize="20"
+                                       FontWeight="800"
+                                       Foreground="{StaticResource AppTextPrimaryBrush}"/>
+                            <TextBlock Text="Track scams. Earn points."
+                                       Classes="caption"/>
+                        </StackPanel>
+                    </StackPanel>
+
+                    <StackPanel Spacing="4">
+                        <StackPanel x:Name="WorkspaceNavigation" Spacing="4" IsEnabled="False">
+                        <Button x:Name="DashboardNav" Classes="nav active" Content="Dashboard" Click="ShowDashboard"/>
+                        <Button x:Name="SubmitNav" Classes="nav" Content="Submit" Click="ShowSubmit"/>
+                        <Button x:Name="ReportsNav" Classes="nav" Content="Reports" Click="ShowReports"/>
+                        <Button x:Name="FingerprintsNav" Classes="nav" Content="Fingerprints" Click="ShowFingerprints"/>
+                        <Button x:Name="PointsNav" Classes="nav" Content="Points" Click="ShowPoints"/>
+                        <Button x:Name="SeniorNav" Classes="nav" Content="Senior Protection" Click="ShowSeniorProtection"/>
+                        <Button x:Name="ExamplesNav" Classes="nav" Content="Scam examples" Click="ShowExamples"/>
+                        <Button x:Name="PrivacyNav" Classes="nav" Content="Privacy" Click="ShowPrivacy"/>
+                        <Button x:Name="ModerationNav" Classes="nav" Content="Moderation" Click="ShowModeration" IsVisible="False"/>
+                        <Button x:Name="UsersNav" Classes="nav" Content="Users" Click="ShowUsers" IsVisible="False"/>
+                        </StackPanel>
+                        <Button x:Name="AccountNav" Classes="nav" Content="Account" Click="ShowAccount"/>
+                    </StackPanel>
+                </StackPanel>
+
+                </ScrollViewer>
+                <StackPanel Grid.Row="1" Spacing="6">
+                    <Border Height="1" Background="{StaticResource AppBorderBrush}"/>
+                    <TextBlock x:Name="SessionUserText" Text="Sign in"
+                               Classes="caption"
+                               FontWeight="700"/>
+                    <TextBlock Text="Shared server workspace. Redaction is applied before reports are saved."
+                               Classes="caption"
+                               TextWrapping="Wrap"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <Grid Grid.Column="1"
+              RowDefinitions="64,*"
+              Background="{StaticResource AppBackgroundBrush}">
+            <Border Background="{StaticResource AppSurfaceBrush}"
+                    BorderBrush="{StaticResource AppBorderBrush}"
+                    BorderThickness="0,0,0,1"
+                    Padding="24,0">
+                <Grid ColumnDefinitions="*,220,Auto,Auto" ColumnSpacing="12" VerticalAlignment="Center">
+                    <TextBlock x:Name="PageTitle"
+                               Text="Dashboard"
+                               Classes="pageTitle"
+                               VerticalAlignment="Center"/>
+                    <TextBox x:Name="SearchBox"
+                             Grid.Column="1"
+                             PlaceholderText="Search reports"
+                             TextChanged="OnSearchChanged" IsEnabled="False"/>
+                    <Button Grid.Column="2"
+                            Classes="secondary" Content="Refresh" Click="OnRefresh"/>
+                    <Button x:Name="SubmitToolbarButton" Grid.Column="3" IsEnabled="False"
+                            Classes="primary"
+                            Content="Submit Report"
+                            Click="ShowSubmit"/>
+                </Grid>
+            </Border>
+
+            <Grid Grid.Row="1"
+                  Margin="24"
+                  Background="{StaticResource AppBackgroundBrush}">
+                <ScrollViewer x:Name="DashboardPage">
+                    <StackPanel Spacing="18">
+                        <Grid ColumnDefinitions="*,*,*,*" ColumnSpacing="12">
+                            <Border Classes="panel" Padding="16">
+                                <StackPanel Spacing="8">
+                                    <TextBlock Text="Reports" Classes="caption"/>
+                                    <TextBlock x:Name="TotalReportsText" Text="0" Classes="pageTitle"/>
+                                </StackPanel>
+                            </Border>
+                            <Border Grid.Column="1" Classes="panel" Padding="16">
+                                <StackPanel Spacing="8">
+                                    <TextBlock Text="Pending Review" Classes="caption"/>
+                                    <TextBlock x:Name="PendingReportsText" Text="0" Classes="pageTitle"/>
+                                </StackPanel>
+                            </Border>
+                            <Border Grid.Column="2" Classes="panel" Padding="16">
+                                <StackPanel Spacing="8">
+                                    <TextBlock Text="Fingerprints" Classes="caption"/>
+                                    <TextBlock x:Name="FingerprintCountText" Text="0" Classes="pageTitle"/>
+                                </StackPanel>
+                            </Border>
+                            <Border Grid.Column="3" Classes="panel" Padding="16">
+                                <StackPanel Spacing="8">
+                                    <TextBlock Text="Points" Classes="caption"/>
+                                    <TextBlock x:Name="TotalPointsText" Text="0" Classes="pageTitle"/>
+                                </StackPanel>
+                            </Border>
+                        </Grid>
+
+                        <Grid ColumnDefinitions="1.2*,0.8*" ColumnSpacing="18">
+                            <Border Classes="panel" Padding="18">
+                                <Grid RowDefinitions="Auto,*" RowSpacing="14">
+                                    <TextBlock Text="Recent reports" Classes="sectionTitle"/>
+                                    <ListBox x:Name="DashboardReportsList"
+                                             Grid.Row="1"
+                                             MinHeight="320"
+                                             SelectionChanged="OnDashboardReportSelected">
+                                        <ListBox.ItemTemplate>
+                                            <DataTemplate x:DataType="models:ScamReport">
+                                                <Grid ColumnDefinitions="*,Auto" Margin="8">
+                                                    <StackPanel Spacing="3">
+                                                        <TextBlock Text="{Binding Category}" FontWeight="700"/>
+                                                        <TextBlock Text="Demo report" IsVisible="{Binding IsDemo}" Classes="caption" FontWeight="700"/>
+                                                        <TextBlock Text="{Binding ContentPreview}" Classes="caption" TextWrapping="Wrap"/>
+                                                    </StackPanel>
+                                                    <TextBlock Grid.Column="1" Text="{Binding RiskLevel}" FontWeight="700"/>
+                                                </Grid>
+                                            </DataTemplate>
+                                        </ListBox.ItemTemplate>
+                                    </ListBox>
+                                </Grid>
+                            </Border>
+
+                            <Border Grid.Column="1" Classes="altPanel" Padding="18">
+                                <StackPanel Spacing="12">
+                                    <TextBlock Text="Review principles" Classes="sectionTitle"/>
+                                    <TextBlock Text="Community reports are signals, not proof." Classes="body" TextWrapping="Wrap"/>
+                                    <TextBlock Text="Points reward useful reporting, not accusations." Classes="body" TextWrapping="Wrap"/>
+                                    <TextBlock Text="Fingerprints should identify scam patterns, not victims." Classes="body" TextWrapping="Wrap"/>
+                                    <Border Background="{StaticResource AppAccentBrush}" Height="4" CornerRadius="2"/>
+                                    <TextBlock x:Name="DashboardEmptyText"
+                                               Text="Submit suspicious content to start your workspace."
+                                               Classes="body"
+                                               TextWrapping="Wrap"/>
+                                </StackPanel>
+                            </Border>
+                        </Grid>
+                    </StackPanel>
+                </ScrollViewer>
+
+                <ScrollViewer x:Name="SubmitPage" IsVisible="False">
+                    <Grid ColumnDefinitions="1.1*,0.9*" ColumnSpacing="18">
+                        <Border Classes="panel" Padding="18">
+                            <Grid RowDefinitions="Auto,Auto,Auto,*" RowSpacing="14">
+                                <StackPanel Spacing="6">
+                                    <TextBlock Text="Suspicious content" Classes="sectionTitle"/>
+                                    <TextBlock Text="Remove names, addresses, account numbers, and codes before submitting."
+                                               Classes="body"
+                                               TextWrapping="Wrap"/>
+                                </StackPanel>
+
+                                <Grid Grid.Row="1" ColumnDefinitions="*,*" ColumnSpacing="12">
+                                    <StackPanel Spacing="6">
+                                        <TextBlock Text="Category" Classes="caption" FontWeight="700"/>
+                                        <ComboBox x:Name="CategoryComboBox" SelectedIndex="0" SelectionChanged="OnCategoryChanged">
+                                            <ComboBoxItem Content="Unknown"/>
+                                            <ComboBoxItem Content="SMS"/>
+                                            <ComboBoxItem Content="Phone call"/>
+                                            <ComboBoxItem Content="Email"/>
+                                            <ComboBoxItem Content="Website"/>
+                                            <ComboBoxItem Content="Social media"/>
+                                            <ComboBoxItem Content="Payment request"/>
+                                            <ComboBoxItem Content="Impersonation"/>
+                                        </ComboBox>
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="1" Spacing="6">
+                                        <TextBlock Text="Confidence" Classes="caption" FontWeight="700"/>
+                                        <ComboBox x:Name="ConfidenceComboBox" SelectedIndex="0">
+                                            <ComboBoxItem Content="I personally received this"/>
+                                            <ComboBoxItem Content="Reported by someone else"/>
+                                            <ComboBoxItem Content="Unsure"/>
+                                        </ComboBox>
+                                    </StackPanel>
+                                </Grid>
+
+                                <TextBox x:Name="SuspiciousContentBox"
+                                         Grid.Row="2"
+                                         AcceptsReturn="True"
+                                         TextWrapping="Wrap"
+                                         TextChanged="OnSubmissionChanged"
+                                         MinHeight="260"
+                                         PlaceholderText="Paste suspicious text, a link, a phone number, or payment request"/>
+
+                                <Grid Grid.Row="3" RowDefinitions="Auto,Auto" RowSpacing="12">
+                                    <StackPanel Spacing="8">
+                                        <CheckBox x:Name="ContainsPersonalInfoCheckBox" Content="This report contains personal information"/>
+                                        <CheckBox x:Name="PrivacyReviewCheckBox"
+                                                  Content="I reviewed this report for private details"
+                                                  IsCheckedChanged="OnPrivacyReviewChanged"/>
+                                    </StackPanel>
+                                    <StackPanel Grid.Row="1" Orientation="Horizontal" Spacing="10" HorizontalAlignment="Right">
+                                        <Button Classes="secondary" Content="Clear" Click="OnClearSubmission"/>
+                                        <Button Classes="secondary" Content="Analyze" Click="OnAnalyzeSubmission"/>
+                                        <Button x:Name="SaveReportButton"
+                                                Classes="primary"
+                                                Content="Save Report"
+                                                Click="OnSaveReport"
+                                                IsEnabled="False"/>
+                                    </StackPanel>
+                                </Grid>
+                            </Grid>
+                        </Border>
+
+                        <Border Grid.Column="1" Classes="panel" Padding="18">
+                            <Grid RowDefinitions="Auto,Auto,Auto,*" RowSpacing="14">
+                                <TextBlock Text="Analysis" Classes="sectionTitle"/>
+                                <Border Grid.Row="1"
+                                        Classes="altPanel"
+                                        Padding="14">
+                                    <StackPanel Spacing="8">
+                                        <Grid ColumnDefinitions="*,Auto">
+                                            <TextBlock x:Name="RiskLevelText" Text="No analysis yet" FontWeight="700"/>
+                                            <TextBlock x:Name="RiskScoreText" Grid.Column="1" Text="0/100" FontWeight="700"/>
+                                        </Grid>
+                                        <ProgressBar x:Name="RiskScoreBar" Minimum="0" Maximum="100" Value="0"/>
+                                        <TextBlock x:Name="DuplicateNoticeText" Classes="caption" TextWrapping="Wrap"/>
+                                        <TextBlock x:Name="SeniorNoticeText" Classes="caption" TextWrapping="Wrap"/>
+                                    </StackPanel>
+                                </Border>
+
+                                <Border Grid.Row="2"
+                                        Classes="altPanel"
+                                        Padding="14">
+                                    <StackPanel Spacing="8">
+                                        <TextBlock Text="Redacted preview" FontWeight="700"/>
+                                        <TextBlock x:Name="RedactedPreviewText"
+                                                   Text="Analysis will show the saved preview here."
+                                                   Classes="body"
+                                                   TextWrapping="Wrap"/>
+                                    </StackPanel>
+                                </Border>
+
+                                <Border Grid.Row="3" Classes="altPanel" Padding="14">
+                                    <Grid RowDefinitions="Auto,*" RowSpacing="10">
+                                        <TextBlock Text="Signals" FontWeight="700"/>
+                                        <ItemsControl x:Name="SignalsItems" Grid.Row="1">
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate x:DataType="models:ScamSignal">
+                                                    <Border BorderBrush="{StaticResource AppBorderBrush}"
+                                                            BorderThickness="0,0,0,1"
+                                                            Padding="0,8">
+                                                        <StackPanel>
+                                                            <TextBlock Text="{Binding Name}" FontWeight="700"/>
+                                                            <TextBlock Text="{Binding Detail}" Classes="caption" TextWrapping="Wrap"/>
+                                                        </StackPanel>
+                                                    </Border>
+                                                </DataTemplate>
+                                            </ItemsControl.ItemTemplate>
+                                        </ItemsControl>
+                                    </Grid>
+                                </Border>
+                            </Grid>
+                        </Border>
+                    </Grid>
+                </ScrollViewer>
+
+                <ScrollViewer x:Name="ReportsPage" IsVisible="False">
+                    <Grid ColumnDefinitions="1*,1.05*" ColumnSpacing="18">
+                        <Border Classes="panel" Padding="18">
+                            <Grid RowDefinitions="Auto,*" RowSpacing="14">
+                                <TextBlock Text="Report queue" Classes="sectionTitle"/>
+                                <ListBox x:Name="ReportsList"
+                                         Grid.Row="1"
+                                         MinHeight="560"
+                                         SelectionChanged="OnReportSelected">
+                                    <ListBox.ItemTemplate>
+                                        <DataTemplate x:DataType="models:ScamReport">
+                                            <Grid ColumnDefinitions="*,Auto" Margin="8">
+                                                <StackPanel Spacing="4">
+                                                    <TextBlock Text="{Binding Category}" FontWeight="700"/>
+                                                    <TextBlock Text="Demo report" IsVisible="{Binding IsDemo}" Classes="caption" FontWeight="700"/>
+                                                    <TextBlock Text="{Binding ContentPreview}" Classes="caption" TextWrapping="Wrap"/>
+                                                    <TextBlock Text="{Binding Status}" Classes="caption"/>
+                                                </StackPanel>
+                                                <StackPanel Grid.Column="1" Spacing="4" HorizontalAlignment="Right">
+                                                    <TextBlock Text="{Binding RiskLevel}" FontWeight="700"/>
+                                                    <TextBlock Text="{Binding PointsAwarded}" Classes="caption"/>
+                                                </StackPanel>
+                                            </Grid>
+                                        </DataTemplate>
+                                    </ListBox.ItemTemplate>
+                                </ListBox>
+                            </Grid>
+                        </Border>
+
+                        <Border Grid.Column="1" Classes="panel" Padding="18">
+                            <Grid RowDefinitions="Auto,Auto,Auto,*,Auto" RowSpacing="14">
+                                <StackPanel Spacing="5">
+                                    <TextBlock x:Name="SelectedReportTitle" Text="No report selected" Classes="sectionTitle"/>
+                                    <TextBlock x:Name="SelectedReportMeta" Text="Select a report to inspect its evidence and moderation state." Classes="body" TextWrapping="Wrap"/>
+                                    <TextBlock x:Name="SelectedReportSource" Classes="caption" TextWrapping="Wrap" IsVisible="False"/>
+                                </StackPanel>
+
+                                <Border Grid.Row="1" Classes="altPanel" Padding="14">
+                                    <TextBlock x:Name="SelectedReportPreview"
+                                               Text="No report loaded."
+                                               TextWrapping="Wrap"
+                                               Classes="body"/>
+                                </Border>
+
+                                <Grid Grid.Row="2" ColumnDefinitions="*,*" ColumnSpacing="12">
+                                    <Border Classes="altPanel" Padding="14">
+                                        <StackPanel Spacing="4">
+                                            <TextBlock Text="Fingerprint" Classes="caption"/>
+                                            <TextBlock x:Name="SelectedFingerprintText" Text="-" FontWeight="700"/>
+                                        </StackPanel>
+                                    </Border>
+                                    <Border Grid.Column="1" Classes="altPanel" Padding="14">
+                                        <StackPanel Spacing="4">
+                                            <TextBlock Text="Points" Classes="caption"/>
+                                            <TextBlock x:Name="SelectedPointsText" Text="-" FontWeight="700"/>
+                                        </StackPanel>
+                                    </Border>
+                                </Grid>
+
+                                <ItemsControl x:Name="SelectedReportSignals" Grid.Row="3">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate x:DataType="models:ScamSignal">
+                                            <Border BorderBrush="{StaticResource AppBorderBrush}"
+                                                    BorderThickness="0,0,0,1"
+                                                    Padding="0,8">
+                                                <StackPanel>
+                                                    <TextBlock Text="{Binding Name}" FontWeight="700"/>
+                                                    <TextBlock Text="{Binding Detail}" Classes="caption" TextWrapping="Wrap"/>
+                                                </StackPanel>
+                                            </Border>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+
+                                <StackPanel Grid.Row="4" Orientation="Horizontal" Spacing="10" HorizontalAlignment="Right">
+                                    <Button x:Name="WithdrawReportButton" Classes="secondary" Content="Withdraw" Click="OnWithdrawReport" IsEnabled="False"/>
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+                    </Grid>
+                </ScrollViewer>
+
+                <ScrollViewer x:Name="FingerprintsPage" IsVisible="False">
+                    <Border Classes="panel" Padding="18">
+                        <Grid RowDefinitions="Auto,*" RowSpacing="14">
+                            <StackPanel Spacing="5">
+                                <TextBlock Text="Fingerprints" Classes="sectionTitle"/>
+                                <TextBlock Text="Reusable patterns are built from scam traits, not victim identity." Classes="body"/>
+                            </StackPanel>
+                            <ListBox x:Name="FingerprintsList" Grid.Row="1" MinHeight="560">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate x:DataType="models:ScamFingerprint">
+                                        <Grid ColumnDefinitions="*,Auto" Margin="8">
+                                            <StackPanel Spacing="4">
+                                                <TextBlock Text="{Binding Category}" FontWeight="700"/>
+                                                <TextBlock Text="{Binding Key}" Classes="caption"/>
+                                            </StackPanel>
+                                            <StackPanel Grid.Column="1" Spacing="4" HorizontalAlignment="Right">
+                                                <TextBlock Text="{Binding HighestRiskLevel}" FontWeight="700"/>
+                                                <TextBlock Text="{Binding SeenCount}" Classes="caption"/>
+                                            </StackPanel>
+                                        </Grid>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                        </Grid>
+                    </Border>
+                </ScrollViewer>
+
+                <ScrollViewer x:Name="PointsPage" IsVisible="False">
+                    <Grid ColumnDefinitions="0.8*,1.2*" ColumnSpacing="18">
+                        <Border Classes="panel" Padding="18">
+                            <StackPanel Spacing="12">
+                                <TextBlock Text="Community help score" Classes="sectionTitle"/>
+                                <TextBlock x:Name="PointsTotalLargeText" Text="0" FontSize="42" FontWeight="800"/>
+                                <TextBlock Text="Exact duplicates do not earn points." Classes="body" TextWrapping="Wrap"/>
+                                <TextBlock Text="Low-confidence reports earn reduced points. Rejected and withdrawn reports lose their points; valid reopening or verification restores them." Classes="body" TextWrapping="Wrap"/>
+                            </StackPanel>
+                        </Border>
+                        <Border Grid.Column="1" Classes="panel" Padding="18">
+                            <Grid RowDefinitions="Auto,*" RowSpacing="14">
+                                <TextBlock Text="Ledger" Classes="sectionTitle"/>
+                                <ListBox x:Name="PointsLedgerList" Grid.Row="1" MinHeight="560">
+                                    <ListBox.ItemTemplate>
+                                        <DataTemplate x:DataType="models:PointsLedgerEntry">
+                                            <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12" Margin="8">
+                                                <TextBlock Text="{Binding Points}" FontWeight="800"/>
+                                                <StackPanel Grid.Column="1" Spacing="3">
+                                                    <TextBlock Text="{Binding Reason}" FontWeight="700"/>
+                                                    <TextBlock Text="{Binding CreatedAt}" Classes="caption"/>
+                                                </StackPanel>
+                                            </Grid>
+                                        </DataTemplate>
+                                    </ListBox.ItemTemplate>
+                                </ListBox>
+                            </Grid>
+                        </Border>
+                    </Grid>
+                </ScrollViewer>
+
+                <ScrollViewer x:Name="SeniorPage" IsVisible="False">
+                    <Grid ColumnDefinitions="1*,1*" ColumnSpacing="18">
+                        <Border Classes="panel" Padding="18">
+                            <StackPanel Spacing="12">
+                                <TextBlock Text="Protection note" Classes="sectionTitle"/>
+                                <TextBlock Text="If money, codes, or remote access are involved, stop and verify with a trusted person first."
+                                           Classes="body"
+                                           TextWrapping="Wrap"/>
+                                <Border Classes="altPanel" Padding="14">
+                                    <TextBlock x:Name="SeniorNoteText"
+                                               Text="Select a report with a senior-risk signal to prepare a plain-language note."
+                                               Classes="body"
+                                               TextWrapping="Wrap"/>
+                                </Border>
+                            </StackPanel>
+                        </Border>
+                        <Border Grid.Column="1" Classes="panel" Padding="18">
+                            <Grid RowDefinitions="Auto,*" RowSpacing="14">
+                                <TextBlock Text="Flagged reports" Classes="sectionTitle"/>
+                                <ListBox x:Name="SeniorReportsList"
+                                         Grid.Row="1"
+                                         MinHeight="560"
+                                         SelectionChanged="OnSeniorReportSelected">
+                                    <ListBox.ItemTemplate>
+                                        <DataTemplate x:DataType="models:ScamReport">
+                                            <Grid ColumnDefinitions="*,Auto" Margin="8">
+                                                <StackPanel Spacing="4">
+                                                    <TextBlock Text="{Binding Category}" FontWeight="700"/>
+                                                    <TextBlock Text="Demo report" IsVisible="{Binding IsDemo}" Classes="caption" FontWeight="700"/>
+                                                    <TextBlock Text="{Binding ContentPreview}" Classes="caption" TextWrapping="Wrap"/>
+                                                </StackPanel>
+                                                <TextBlock Grid.Column="1" Text="{Binding RiskLevel}" FontWeight="700"/>
+                                            </Grid>
+                                        </DataTemplate>
+                                    </ListBox.ItemTemplate>
+                                </ListBox>
+                            </Grid>
+                        </Border>
+                    </Grid>
+                </ScrollViewer>
+
+                <ScrollViewer x:Name="ExamplesPage" IsVisible="False">
+                    <StackPanel Spacing="18">
+                        <TextBlock Text="SMS Spam Collection Dataset" Classes="sectionTitle"/>
+                        <TextBlock Text="Historical spam labels are not confirmed scam verdicts. Do not follow links or call numbers in these messages." Classes="body" TextWrapping="Wrap"/>
+                        <TextBlock x:Name="ExamplesCountText" Classes="caption" TextWrapping="Wrap"/>
+                        <Grid ColumnDefinitions="*,1.05*" ColumnSpacing="18">
+                            <StackPanel Spacing="14">
+                                <Grid ColumnDefinitions="*,1.3*,Auto" ColumnSpacing="10">
+                                    <StackPanel Spacing="6">
+                                        <TextBlock Text="Dataset label" Classes="caption"/>
+                                        <ComboBox x:Name="ExamplesLabelComboBox" SelectedIndex="0" SelectionChanged="OnExamplesLabelChanged">
+                                            <ComboBoxItem Content="Spam"/>
+                                            <ComboBoxItem Content="Ham (not spam)"/>
+                                            <ComboBoxItem Content="All messages"/>
+                                        </ComboBox>
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="1" Spacing="6">
+                                        <TextBlock Text="Search examples" Classes="caption"/>
+                                        <TextBox x:Name="ExamplesSearchBox" MaxLength="200" KeyDown="OnExamplesSearchKeyDown"/>
+                                    </StackPanel>
+                                    <Button Grid.Column="2" Classes="secondary" Content="Search" VerticalAlignment="Bottom" Click="OnExamplesSearch"/>
+                                </Grid>
+                                <ListBox x:Name="ExamplesList" MinHeight="320" MaxHeight="550" SelectionChanged="OnExampleSelected">
+                                    <ListBox.ItemTemplate>
+                                        <DataTemplate x:DataType="models:ScamExample">
+                                            <StackPanel Spacing="6" Margin="4">
+                                                <StackPanel Orientation="Horizontal" Spacing="8">
+                                                    <TextBlock Text="{Binding DisplayLabel}" Classes="caption" FontWeight="700"/>
+                                                    <TextBlock Text="{Binding SourceRow}" Classes="caption"/>
+                                                </StackPanel>
+                                                <TextBlock Text="{Binding Content}" Classes="body" TextWrapping="Wrap" MaxLines="2" TextTrimming="CharacterEllipsis"/>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </ListBox.ItemTemplate>
+                                </ListBox>
+                                <TextBlock x:Name="ExamplesEmptyText" Classes="body" IsVisible="False"/>
+                                <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="10">
+                                    <Button x:Name="ExamplesPreviousButton" Classes="secondary" Content="Previous" Click="OnExamplesPrevious" IsEnabled="False"/>
+                                    <TextBlock x:Name="ExamplesPaginationText" Grid.Column="1" Classes="caption" VerticalAlignment="Center" TextAlignment="Center" TextWrapping="Wrap"/>
+                                    <Button x:Name="ExamplesNextButton" Grid.Column="2" Classes="secondary" Content="Next" Click="OnExamplesNext" IsEnabled="False"/>
+                                </Grid>
+                            </StackPanel>
+                            <StackPanel Grid.Column="1" Spacing="14">
+                                <TextBlock x:Name="ExampleTitleText" Text="No example selected" Classes="sectionTitle"/>
+                                <TextBlock x:Name="ExampleLabelText" Classes="caption" FontWeight="700"/>
+                                <TextBlock x:Name="ExampleContentText" FontSize="16" LineHeight="26" TextWrapping="Wrap"/>
+                                <StackPanel x:Name="ExampleAnalysisPanel" Spacing="12" IsVisible="False">
+                                    <TextBlock Text="Rule-based analysis" Classes="sectionTitle"/>
+                                    <TextBlock x:Name="ExampleRiskText" Classes="body"/>
+                                    <ItemsControl x:Name="ExampleSignals">
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate x:DataType="models:ScamSignal">
+                                                <StackPanel Spacing="3" Margin="0,0,0,8">
+                                                    <TextBlock Text="{Binding Name}" FontWeight="700"/>
+                                                    <TextBlock Text="{Binding Detail}" Classes="body" TextWrapping="Wrap"/>
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </StackPanel>
+                            </StackPanel>
+                        </Grid>
+                        <StackPanel x:Name="ExamplesSourcePanel" Spacing="6" IsVisible="False">
+                            <TextBlock x:Name="ExamplesAttributionText" Classes="caption" TextWrapping="Wrap"/>
+                            <TextBlock x:Name="ExamplesLicenseText" Classes="caption" TextWrapping="Wrap"/>
+                            <WrapPanel>
+                                <Button Classes="secondary" Content="Kaggle source" Tag="kaggle" Click="OnExampleSource" Margin="0,0,8,8"/>
+                                <Button Classes="secondary" Content="UCI source" Tag="uci" Click="OnExampleSource" Margin="0,0,8,8"/>
+                                <Button Classes="secondary" Content="CC BY 4.0" Tag="license" Click="OnExampleSource" Margin="0,0,0,8"/>
+                            </WrapPanel>
+                        </StackPanel>
+                    </StackPanel>
+                </ScrollViewer>
+
+                <ScrollViewer x:Name="PrivacyPage" IsVisible="False">
+                    <Border Classes="panel" Padding="18">
+                        <StackPanel Spacing="16">
+                            <TextBlock Text="Privacy" Classes="sectionTitle"/>
+                            <TextBlock Text="Citrine stores your reports on the shared server. Your workspace shows only your reports; moderators can review submitted reports. Redacted previews are used in the interface."
+                                       Classes="body"
+                                       TextWrapping="Wrap"/>
+                            <Border Classes="altPanel" Padding="14">
+                                <StackPanel Spacing="8">
+                                    <TextBlock Text="Shared API server" FontWeight="700"/>
+                                    <TextBlock x:Name="DataPathText" Classes="body" TextWrapping="Wrap"/>
+                                </StackPanel>
+                            </Border>
+                            <TextBlock Text="Delete only your reports and points. Your account and moderation audit history are retained. Other accounts are not affected."
+                                       Classes="body"
+                                       TextWrapping="Wrap"/>
+                            <CheckBox x:Name="DeleteWorkspaceCheckBox" Content="I confirm deletion of my reports and points"
+                                      IsCheckedChanged="OnDeleteConfirmationChanged"/>
+                            <Button x:Name="DeleteWorkspaceButton" Classes="secondary" IsEnabled="False"
+                                    Content="Delete My Reports"
+                                    HorizontalAlignment="Left"
+                                    Click="OnClearWorkspace"/>
+                        </StackPanel>
+                    </Border>
+                </ScrollViewer>
+
+                <ScrollViewer x:Name="AccountPage" IsVisible="False">
+                    <StackPanel Spacing="18" MaxWidth="680" HorizontalAlignment="Left">
+                        <StackPanel x:Name="SignedOutPanel" Spacing="14">
+                            <TextBlock Text="Account" Classes="sectionTitle"/>
+                            <TextBlock Text="Sign in or create an account to access your reports." Classes="body" TextWrapping="Wrap"/>
+                            <TextBlock Text="Username" Classes="caption" FontWeight="700"/>
+                            <TextBox x:Name="UsernameBox" MaxLength="32" MinWidth="360"/>
+                            <TextBlock Text="Use 3-32 letters, digits, periods, underscores, or hyphens." Classes="caption" TextWrapping="Wrap"/>
+                            <TextBlock Text="Password" Classes="caption" FontWeight="700"/>
+                            <TextBox x:Name="PasswordBox" PasswordChar="*" MaxLength="128"/>
+                            <TextBlock Text="Use 12-128 characters." Classes="caption"/>
+                            <StackPanel Orientation="Horizontal" Spacing="10">
+                                <Button Classes="primary" Content="Sign In" Click="OnLogin"/>
+                                <Button Classes="secondary" Content="Create Account" Click="OnRegister"/>
+                            </StackPanel>
+                        </StackPanel>
+                        <StackPanel x:Name="SignedInPanel" IsVisible="False" Spacing="14">
+                            <TextBlock x:Name="AccountUsernameText" Classes="sectionTitle"/>
+                            <TextBlock x:Name="AccountDetailsText" Classes="body" TextWrapping="Wrap"/>
+                            <Button Classes="secondary" Content="Sign Out" Click="OnLogout"/>
+                            <Border Height="1" Background="{StaticResource AppBorderBrush}" Margin="0,8"/>
+                            <TextBlock Text="Change password" Classes="sectionTitle"/>
+                            <TextBlock Text="Current password" Classes="caption" FontWeight="700"/>
+                            <TextBox x:Name="CurrentPasswordBox" PasswordChar="*" MaxLength="128" MinWidth="360"/>
+                            <TextBlock Text="New password" Classes="caption" FontWeight="700"/>
+                            <TextBox x:Name="NewPasswordBox" PasswordChar="*" MaxLength="128"/>
+                            <TextBlock Text="Use 12-128 characters." Classes="caption"/>
+                            <Button Classes="primary" Content="Change Password" Click="OnChangePassword"/>
+                        </StackPanel>
+                    </StackPanel>
+                </ScrollViewer>
+
+                <ScrollViewer x:Name="ModerationPage" IsVisible="False">
+                    <Grid ColumnDefinitions="1*,1.05*" ColumnSpacing="18">
+                        <StackPanel Spacing="14">
+                            <TextBlock Text="Moderation queue" Classes="sectionTitle"/>
+                            <TextBlock Text="Status" Classes="caption" FontWeight="700"/>
+                            <ComboBox x:Name="ModerationStatusComboBox" SelectedIndex="0" SelectionChanged="OnModerationFilterChanged">
+                                <ComboBoxItem Content="PendingReview"/>
+                                <ComboBoxItem Content="Verified"/>
+                                <ComboBoxItem Content="Rejected"/>
+                                <ComboBoxItem Content="Draft"/>
+                                <ComboBoxItem Content="Duplicate"/>
+                                <ComboBoxItem Content="all"/>
+                            </ComboBox>
+                            <TextBox x:Name="ModerationSearchBox" PlaceholderText="Search reports" TextChanged="OnModerationSearchChanged"/>
+                            <ListBox x:Name="ModerationReportsList" MinHeight="300" MaxHeight="520" SelectionChanged="OnModerationReportSelected">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate x:DataType="models:ScamReport">
+                                        <StackPanel Spacing="4" Margin="8">
+                                            <TextBlock Text="{Binding Category}" FontWeight="700"/>
+                                            <TextBlock Text="{Binding ContentPreview}" Classes="caption" TextWrapping="Wrap"/>
+                                            <TextBlock Text="{Binding SubmittedBy}" Classes="caption"/>
+                                            <TextBlock Text="{Binding Status}" Classes="caption"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                            <TextBlock x:Name="ModerationEmptyText" Text="No reports match this queue." Classes="body" IsVisible="False"/>
+                        </StackPanel>
+                        <StackPanel Grid.Column="1" Spacing="14">
+                            <TextBlock x:Name="ModerationReportTitle" Text="No report selected" Classes="sectionTitle" TextWrapping="Wrap"/>
+                            <TextBlock x:Name="ModerationReportMeta" Classes="body" TextWrapping="Wrap"/>
+                            <TextBlock x:Name="ModerationReportPreview" Classes="body" TextWrapping="Wrap"/>
+                            <TextBlock x:Name="ModerationReportFingerprint" Classes="caption" TextWrapping="Wrap"/>
+                            <ItemsControl x:Name="ModerationSignals">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate x:DataType="models:ScamSignal">
+                                        <StackPanel Spacing="3" Margin="0,4">
+                                            <TextBlock Text="{Binding Name}" FontWeight="700"/>
+                                            <TextBlock Text="{Binding Detail}" Classes="caption" TextWrapping="Wrap"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                            <TextBlock x:Name="ModerationPermissionText" Classes="body" TextWrapping="Wrap"/>
+                            <TextBlock Text="Reason" Classes="caption" FontWeight="700"/>
+                            <TextBox x:Name="ModerationReasonBox" AcceptsReturn="True" MaxLength="1000" TextWrapping="Wrap" MinHeight="74" TextChanged="OnModerationReasonChanged"/>
+                            <WrapPanel Orientation="Horizontal">
+                                <Button x:Name="VerifyReportButton" Classes="secondary" Content="Mark Verified" Click="OnMarkVerified" IsEnabled="False" Margin="0,0,8,8"/>
+                                <Button x:Name="RejectReportButton" Classes="secondary" Content="Mark Mistaken" Click="OnMarkRejected" IsEnabled="False" Margin="0,0,8,8"/>
+                                <Button x:Name="ReopenReportButton" Classes="secondary" Content="Reopen" Click="OnReopenReport" IsEnabled="False" Margin="0,0,0,8"/>
+                            </WrapPanel>
+                            <Grid ColumnDefinitions="*,Auto">
+                                <TextBlock Text="History" Classes="sectionTitle" VerticalAlignment="Center"/>
+                                <Button Grid.Column="1" Classes="secondary" Content="All History" Click="OnAllHistory"/>
+                            </Grid>
+                            <TextBlock x:Name="HistoryEmptyText" Text="No moderation history." Classes="body" IsVisible="False"/>
+                            <ItemsControl x:Name="ModerationHistoryList">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate x:DataType="models:ModerationAction">
+                                        <Border BorderBrush="{StaticResource AppBorderBrush}" BorderThickness="0,0,0,1" Padding="0,10">
+                                            <StackPanel Spacing="4">
+                                                <TextBlock Text="{Binding Action}" FontWeight="700"/>
+                                                <TextBlock Text="{Binding ActorUsername}" Classes="caption"/>
+                                                <TextBlock Text="{Binding Target}" Classes="caption" TextWrapping="Wrap"/>
+                                                <TextBlock Text="{Binding StatusChange}" Classes="caption" TextWrapping="Wrap"/>
+                                                <TextBlock Text="{Binding Reason}" Classes="body" TextWrapping="Wrap"/>
+                                                <StackPanel Orientation="Horizontal" Spacing="6">
+                                                    <TextBlock Text="Points adjustment:" Classes="caption"/>
+                                                    <TextBlock Text="{Binding PointsDelta}" Classes="caption"/>
+                                                </StackPanel>
+                                                <TextBlock Text="{Binding CreatedAt}" Classes="caption"/>
+                                            </StackPanel>
+                                        </Border>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </StackPanel>
+                    </Grid>
+                </ScrollViewer>
+
+                <ScrollViewer x:Name="UsersPage" IsVisible="False">
+                    <Grid ColumnDefinitions="1*,1.05*" ColumnSpacing="18">
+                        <StackPanel Spacing="14">
+                            <TextBlock Text="Users" Classes="sectionTitle"/>
+                            <ListBox x:Name="UsersList" MinHeight="400" MaxHeight="580" SelectionChanged="OnUserSelected">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate x:DataType="models:AccountUser">
+                                        <StackPanel Spacing="4" Margin="8">
+                                            <TextBlock Text="{Binding Username}" FontWeight="700"/>
+                                            <TextBlock Text="{Binding Role}" Classes="caption"/>
+                                            <TextBlock Text="{Binding Status}" Classes="caption"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                        </StackPanel>
+                        <StackPanel Grid.Column="1" Spacing="14">
+                            <TextBlock x:Name="SelectedUserText" Text="No user selected" Classes="sectionTitle"/>
+                            <TextBlock x:Name="SelectedUserMeta" Classes="body" TextWrapping="Wrap"/>
+                            <TextBlock Text="Role" Classes="caption" FontWeight="700"/>
+                            <ComboBox x:Name="UserRoleComboBox" SelectionChanged="OnUserAccessChanged">
+                                <ComboBoxItem Content="member"/>
+                                <ComboBoxItem Content="moderator"/>
+                                <ComboBoxItem Content="admin"/>
+                            </ComboBox>
+                            <TextBlock Text="Status" Classes="caption" FontWeight="700"/>
+                            <ComboBox x:Name="UserStatusComboBox" SelectionChanged="OnUserAccessChanged">
+                                <ComboBoxItem Content="active"/>
+                                <ComboBoxItem Content="suspended"/>
+                            </ComboBox>
+                            <TextBlock Text="Reason" Classes="caption" FontWeight="700"/>
+                            <TextBox x:Name="UserReasonBox" AcceptsReturn="True" MaxLength="1000" TextWrapping="Wrap" MinHeight="74" TextChanged="OnUserReasonChanged"/>
+                            <TextBlock Text="Role or status changes end the user's existing sessions. The last active admin cannot be removed." Classes="body" TextWrapping="Wrap"/>
+                            <Button x:Name="SaveUserButton" Classes="primary" Content="Save Access" Click="OnSaveUser" IsEnabled="False"/>
+                        </StackPanel>
+                    </Grid>
+                </ScrollViewer>
+            </Grid>
+        </Grid>
+    </Grid>
+    </Grid>
 </Window>

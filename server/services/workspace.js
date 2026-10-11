@@ -90,7 +90,7 @@ export function createWorkspace({ db, statements: sql }) {
   // Explicit local setup only. Reference copies never enter scoring or moderation.
   const addDemoReports = db.transaction((user, count) => {
     requireValue(user?.status === 'active', 400, 'INVALID_USER', 'Choose an existing active account.');
-    requireValue(Number.isInteger(count) && count >= 1 && count <= 25, 400, 'INVALID_COUNT', 'Choose 1 to 25 examples.');
+    requireValue(Number.isInteger(count) && count >= 1 && count <= 1000, 400, 'INVALID_COUNT', 'Choose 1 to 1000 examples.');
     const examples = sql.listExamples.all({ datasetId: exampleDatasetId, label: 'spam', search: '', limit: count, offset: 0 });
     requireValue(examples.length > 0, 400, 'NO_EXAMPLES', 'Import the SMS example dataset first.');
     let created = 0;

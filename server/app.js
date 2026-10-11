@@ -5,6 +5,7 @@ import { createAuth, safeEqual } from './services/auth.js';
 import { createModeration } from './services/moderation.js';
 import { ApiError, requireValue } from './services/errors.js';
 import { createExamples } from './services/examples.js';
+import { createAnalytics } from './services/analytics.js';
 
 const cookieName = 'citrine_session';
 const cookieOptions = { httpOnly: true, secure: process.env.NODE_ENV === 'production', sameSite: 'strict', path: '/api' };
@@ -20,6 +21,7 @@ export function createApp(database) {
   const auth = createAuth(database);
   const moderation = createModeration(database);
   const examples = createExamples(database);
+  const analytics = createAnalytics(database);
   app.disable('x-powered-by');
   app.use(express.json({ limit: '1mb' }));
   app.use('/api', (req, res, next) => {
@@ -82,6 +84,7 @@ export function createApp(database) {
   app.post('/api/auth/password', async (req, res) => setSession(res, await auth.changePassword(req.session, req.body, req.ip)));
 
   app.get('/api/workspace', (req, res) => res.json(workspace.summary(req.session.user)));
+  app.get('/api/analytics', (_req, res) => res.json(analytics.summary()));
   app.get('/api/examples', (req, res) => res.json(examples.list(req.query)));
   app.get('/api/examples/:id', (req, res) => res.json(examples.get(req.params.id)));
   app.get('/api/reports', (req, res) => res.json(workspace.listReports(req.session.user, {

@@ -31,6 +31,8 @@ public partial class MainWindow : Window
     private int _examplesPage = 1;
     private string _exampleSearch = string.Empty;
     private ScamExample? _selectedExample;
+    private ScamStatistics? _statistics;
+    private readonly Avalonia.Threading.DispatcherTimer _analyticsTimer = new() { Interval = TimeSpan.FromSeconds(15) };
 
     public MainWindow()
     {
@@ -44,7 +46,13 @@ public partial class MainWindow : Window
         {
             if (_ready && !_busy && _user is not null) await RunAsync(RefreshSessionAsync);
         };
-        Closed += (_, _) => { _ready = false; _api.Dispose(); };
+        _analyticsTimer.Tick += async (_, _) =>
+        {
+            if (_ready && !_busy && _user is not null && DashboardPage.IsVisible && IsActive)
+                await RunAsync(RefreshAnalyticsAsync);
+        };
+        _analyticsTimer.Start();
+        Closed += (_, _) => { _ready = false; _analyticsTimer.Stop(); _api.Dispose(); };
     }
 
     // Serialize UI operations so an old response cannot be applied to a different account.
@@ -143,6 +151,36 @@ public partial class MainWindow : Window
         if (ModerationPage.IsVisible && _user.IsStaff) await RefreshModerationAsync();
         if (UsersPage.IsVisible && _user.IsAdmin) await RefreshUsersAsync();
         if (ExamplesPage.IsVisible) await RefreshExamplesAsync();
+        if (DashboardPage.IsVisible) await RefreshAnalyticsAsync();
+    }
+
+    private async Task RefreshAnalyticsAsync()
+    {
+        _statistics = await _api.AnalyticsAsync();
+        ApplyAnalytics();
+    }
+
+    private void OnAnalyticsSourceChanged(object? sender, SelectionChangedEventArgs e)
+    {
+        if (_ready && !_binding) ApplyAnalytics();
+    }
+
+    private void ApplyAnalytics()
+    {
+        if (_statistics is null) return;
+        var scope = AnalyticsSourceComboBox.SelectedIndex;
+        var total = scope == 1 ? _statistics.DemoCount : scope == 2 ? _statistics.UserCount : _statistics.Total;
+        ScamDistribution Project(ScamDistribution row)
+        {
+            var demo = scope == 2 ? 0 : row.DemoCount;
+            var user = scope == 1 ? 0 : row.UserCount;
+            return new ScamDistribution { Label = row.Label, DemoCount = demo, UserCount = user,
+                Total = demo + user, Share = total == 0 ? 0 : (demo + user) * 100.0 / total };
+        }
+        AnalyticsCountText.Text = $"{_statistics.DemoCount:N0} demo examples / {_statistics.UserCount:N0} user {(_statistics.UserCount == 1 ? "report" : "reports")}";
+        AnalyticsEmptyText.IsVisible = total == 0;
+        ScamTypesChart.ItemsSource = total == 0 ? null : _statistics.Types.Select(Project).OrderByDescending(row => row.Total).ThenBy(row => row.Label).ToList();
+        ScamRiskChart.ItemsSource = total == 0 ? null : _statistics.Risks.Select(Project).ToList();
     }
 
     private async void Navigate(Control page, Button button, string title) => await RunAsync(async () =>
@@ -447,6 +485,11 @@ public partial class MainWindow : Window
     {
         _binding = true;
         _reports = [];
+        _statistics = null;
+        ScamTypesChart.ItemsSource = ScamRiskChart.ItemsSource = null;
+        AnalyticsCountText.Text = string.Empty;
+        AnalyticsEmptyText.IsVisible = true;
+        AnalyticsSourceComboBox.SelectedIndex = 0;
         _moderationReports = [];
         _seniorId = null;
         _allHistory = true;

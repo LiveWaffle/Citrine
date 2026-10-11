@@ -40,6 +40,17 @@ export const migrationQueries = {
 };
 
 export const queries = {
+  analyticsReports: `
+    SELECT r.category, r.risk_level, r.content_preview AS content, 'user' AS source
+    FROM scam_reports r
+    WHERE r.source_example_id IS NULL AND r.status IN ('PendingReview', 'Verified')
+    UNION ALL
+    SELECT r.category, r.risk_level, e.content, 'demo' AS source
+    FROM scam_reports r JOIN scam_examples e ON e.id = r.source_example_id
+    WHERE r.rowid IN (
+      SELECT min(rowid) FROM scam_reports WHERE source_example_id IS NOT NULL GROUP BY source_example_id
+    )
+  `,
   upsertExampleDataset: `INSERT INTO example_datasets
     (id, title, source_url, upstream_url, attribution, license_note, version, source_sha256, imported_at)
     VALUES (@id, @title, @sourceUrl, @upstreamUrl, @attribution, @licenseNote, @version, @sourceSha256, @importedAt)

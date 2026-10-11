@@ -28,6 +28,27 @@ public sealed class WorkspaceSummary
     public int TotalPoints { get; init; }
 }
 
+public sealed class ScamStatistics
+{
+    public int Total { get; init; }
+    public int DemoCount { get; init; }
+    public int UserCount { get; init; }
+    public List<ScamDistribution> Types { get; init; } = [];
+    public List<ScamDistribution> Risks { get; init; } = [];
+}
+
+public sealed class ScamDistribution
+{
+    public string Label { get; init; } = string.Empty;
+    public int DemoCount { get; init; }
+    public int UserCount { get; init; }
+    public int Total { get; init; }
+    public double Share { get; init; }
+    public string CountLabel => $"{Total:N0} ({Share:F1}%)";
+    public string SourceLabel => $"{DemoCount:N0} demo / {UserCount:N0} user";
+    public double UserShare => Total == 0 ? 0 : Share * UserCount / Total;
+}
+
 public sealed class SubmissionAnalysis
 {
     public bool IsReferenceExample { get; init; }

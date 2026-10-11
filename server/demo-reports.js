@@ -3,8 +3,8 @@ import { createWorkspace } from './services/workspace.js';
 
 const username = process.argv[2]?.trim();
 const count = Number(process.argv[3] ?? 6);
-if (!username || process.argv.length > 4 || !Number.isInteger(count) || count < 1 || count > 25) {
-  console.error('Usage: npm run reports:demo -- <registered-username> [count: 1-25, default 6]');
+if (!username || process.argv.length > 4 || !Number.isInteger(count) || count < 1 || count > 1000) {
+  console.error('Usage: npm run reports:demo -- <registered-username> [count: 1-1000, default 6]');
   process.exitCode = 1;
 } else {
   const database = openDatabase();

@@ -29,6 +29,21 @@
         <SolidColorBrush x:Key="AppInfoBrush" Color="#3080A6"/>
         <SolidColorBrush x:Key="AppDangerBrush" Color="#FF306B"/>
         <SolidColorBrush x:Key="TransparentBrush" Color="Transparent"/>
+        <DataTemplate x:Key="DistributionTemplate" x:DataType="models:ScamDistribution">
+            <StackPanel Spacing="4" Margin="0,0,0,14">
+                <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
+                    <TextBlock Text="{Binding Label}" TextWrapping="Wrap"/>
+                    <TextBlock Grid.Column="1" Text="{Binding CountLabel}" FontWeight="700"/>
+                </Grid>
+                <Grid Height="12">
+                    <ProgressBar Maximum="100" Value="{Binding Share}" Height="12"
+                                 Foreground="{StaticResource AppAccentBrush}" Background="{StaticResource AppSurfaceAltBrush}"/>
+                    <ProgressBar Maximum="100" Value="{Binding UserShare}" Height="12"
+                                 Foreground="{StaticResource AppInfoBrush}" Background="{StaticResource TransparentBrush}"/>
+                </Grid>
+                <TextBlock Text="{Binding SourceLabel}" Classes="caption"/>
+            </StackPanel>
+        </DataTemplate>
     </Window.Resources>
 
     <Window.Styles>
@@ -238,6 +253,42 @@
                                 </StackPanel>
                             </Border>
                         </Grid>
+
+                        <StackPanel Spacing="14">
+                            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="18">
+                                <StackPanel Spacing="4">
+                                    <TextBlock Text="Scam trends" Classes="sectionTitle"/>
+                                    <TextBlock x:Name="AnalyticsCountText" Classes="body"/>
+                                </StackPanel>
+                                <StackPanel Grid.Column="1" Spacing="4">
+                                    <TextBlock Text="Source" Classes="caption"/>
+                                    <ComboBox x:Name="AnalyticsSourceComboBox" SelectedIndex="0" Width="180" SelectionChanged="OnAnalyticsSourceChanged">
+                                        <ComboBoxItem Content="All reports"/>
+                                        <ComboBoxItem Content="Demo examples"/>
+                                        <ComboBoxItem Content="User reports"/>
+                                    </ComboBox>
+                                </StackPanel>
+                            </Grid>
+                            <StackPanel Orientation="Horizontal" Spacing="8">
+                                <Border Background="{StaticResource AppAccentBrush}" Width="12" Height="12"/>
+                                <TextBlock Text="Demo examples" Classes="caption" Margin="0,0,12,0"/>
+                                <Border Background="{StaticResource AppInfoBrush}" Width="12" Height="12"/>
+                                <TextBlock Text="User reports" Classes="caption"/>
+                            </StackPanel>
+                            <TextBlock x:Name="AnalyticsEmptyText" Text="No reports in this selection." Classes="body"/>
+                            <Grid ColumnDefinitions="1.3*,*" ColumnSpacing="32">
+                                <StackPanel Spacing="14">
+                                    <TextBlock Text="Most common types" Classes="sectionTitle"/>
+                                    <ItemsControl x:Name="ScamTypesChart" ItemTemplate="{StaticResource DistributionTemplate}"/>
+                                </StackPanel>
+                                <StackPanel Grid.Column="1" Spacing="14">
+                                    <TextBlock Text="Rule-based risk" Classes="sectionTitle"/>
+                                    <ItemsControl x:Name="ScamRiskChart" ItemTemplate="{StaticResource DistributionTemplate}"/>
+                                </StackPanel>
+                            </Grid>
+                            <TextBlock Text="Rule-based categories, not confirmed scam verdicts. Historical examples are a sample, not real-world prevalence. User counts include pending and verified reports across accounts; withdrawn, rejected, and duplicate reports are excluded."
+                                       Classes="caption" TextWrapping="Wrap"/>
+                        </StackPanel>
 
                         <Grid ColumnDefinitions="1.2*,0.8*" ColumnSpacing="18">
                             <Border Classes="panel" Padding="18">

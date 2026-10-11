@@ -72,6 +72,7 @@ export const api = {
   logout: () => request('/auth/logout', { method: 'POST' }),
   changePassword: body => request('/auth/password', { method: 'POST', body }),
   workspace: signal => request('/workspace', { signal }),
+  analytics: signal => request('/analytics', { signal }),
   examples: (label, search, page, signal) => request(`/examples?${new URLSearchParams({ label, search, page })}`, { signal }),
   example: (id, signal) => request(`/examples/${encodeURIComponent(id)}`, { signal }),
   reports: (search, signal) => request(`/reports?${new URLSearchParams({ search })}`, { signal }),

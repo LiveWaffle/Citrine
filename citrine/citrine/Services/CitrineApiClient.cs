@@ -75,6 +75,7 @@ public sealed class CitrineApiClient : IDisposable
     }
 
     public Task<WorkspaceSummary> WorkspaceAsync() => GetAsync<WorkspaceSummary>("workspace");
+    public Task<ScamStatistics> AnalyticsAsync() => GetAsync<ScamStatistics>("analytics");
     public Task<ExamplePageResult> ExamplesAsync(string label, string search, int page) =>
         GetAsync<ExamplePageResult>("examples?label=" + Uri.EscapeDataString(label)
             + "&search=" + Uri.EscapeDataString(search) + "&page=" + page);

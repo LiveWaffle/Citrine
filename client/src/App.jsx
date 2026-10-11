@@ -80,7 +80,7 @@ function WorkspaceApp({ auth }) {
       <main className="page-content" aria-busy={workspace.loading || clearing}>
         <RequestError error={workspace.error} />
         <RequestError error={auth.error} />
-        <div hidden={page.id !== 'dashboard'}><DashboardPage workspace={workspace} onSelect={openReport} /></div>
+        <div hidden={page.id !== 'dashboard'}><DashboardPage workspace={workspace} onSelect={openReport} active={page.id === 'dashboard'} refreshKey={refreshKey} /></div>
         <div hidden={page.id !== 'submit'}><SubmitPage submission={submission} clearing={clearing} /></div>
         <div hidden={page.id !== 'reports'}><ReportsPage workspace={workspace} selection={selection} clearing={clearing} user={auth.user} /></div>
         <div hidden={page.id !== 'fingerprints'}><FingerprintsPage workspace={workspace} /></div>

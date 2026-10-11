@@ -1,6 +1,7 @@
 import { ReportList } from '../components/ReportList.jsx';
+import { ScamCharts } from '../components/ScamCharts.jsx';
 
-export function DashboardPage({ workspace, onSelect }) {
+export function DashboardPage({ workspace, onSelect, active, refreshKey }) {
   const metrics = [
     ['Reports', workspace.summary?.totalReports],
     ['Pending Review', workspace.summary?.pendingReviewCount],
@@ -13,6 +14,7 @@ export function DashboardPage({ workspace, onSelect }) {
         <p className="caption">{label}</p><p className="page-title">{value ?? ''}</p>
       </section>)}
     </div>
+    <ScamCharts active={active} refreshKey={refreshKey} />
     <div className="columns dashboard-columns">
       <section className="panel stack gap-14">
         <h2 className="section-title">Recent reports</h2>

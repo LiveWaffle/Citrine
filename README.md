@@ -140,7 +140,8 @@ npm run reports:demo -- <registered-username> 6
 ```
 
 Import the example dataset first. This explicitly copies the first six spam rows
-in source order, retaining the originals. The optional count is 1-25 (default 6).
+in source order, retaining the originals. The optional count is 1-1000 (default 6),
+limited by the available spam rows. This workspace now contains 700 demo copies.
 Repeating the command skips copies already present for that account. Nothing runs
 automatically at startup, and no user or credentials are created.
 
@@ -153,6 +154,27 @@ zero sightings when needed. Delete My Reports removes these copies along with
 the account's other reports, without deleting the example library.
 
 ## Reporting and points
+
+### Dashboard charts
+
+The web and desktop dashboards show **Most common types** and **Rule-based risk**
+from authenticated `GET /api/analytics`. Both support All reports, Demo examples,
+and User reports filters. Charts refresh every 15 seconds while the dashboard is
+open (the desktop window must also be active), on returning to the dashboard, and
+through Refresh. New submissions are reflected on the next refresh.
+
+Analytics includes every distinct demo source row once, even if copied to several
+accounts, plus all PendingReview/Verified user reports. Draft, Rejected, and
+Duplicate user reports are excluded. Only category/risk counts cross account
+boundaries, never message text, usernames, or report IDs. Existing legacy reports
+with eligible statuses also count. Demo copies remain zero-point drafts.
+
+Types use ordered keyword rules in `server/services/analytics.js`, with explicit
+scam categories taking precedence over message patterns. Each message belongs to
+one type, with an Other / unclassified fallback. SMS is a channel, not a scam type.
+Source spam labels and these classifications are not verified scam verdicts or
+representative real-world prevalence estimates. Counts are calculated from the
+current database, not hardcoded.
 
 Submit content, choose Category and Confidence, then Analyze. Unknown uses the
 existing automatic classification; other categories override it. Review the

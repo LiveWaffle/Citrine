@@ -94,6 +94,17 @@ blocked in the service and constrained to zero-point drafts by SQLite triggers.
 Copies do not enter moderation, duplicate detection, or active fingerprint totals.
 No new UI creation command or HTTP write route is exposed for these demo copies.
 
+Dashboard analytics adds `ScamCharts` in React and the desktop `ScamTypesChart` /
+`ScamRiskChart` ItemsControls, backed by `GET /api/analytics` and the
+`analyticsReports` SQL query. `ScamStatistics` maps to
+`{total,demoCount,userCount,types,risks}`; each `ScamDistribution` contains
+`{label,demoCount,userCount,total,share}`. The JS hook inside `ScamCharts` and desktop
+`RefreshAnalyticsAsync` poll every 15 seconds on the active dashboard. Both filter
+the same aggregate counts by source. Every unique demo source plus eligible
+user submissions across accounts contributes, without returning private report
+content. The local demo-copy command now accepts up to 1000 rows, bounded by the
+dataset's available spam examples; the requested 700 have been copied locally.
+
 GET `/api/examples?label=spam&search=&page=1` maps to `listExamples`, `countExamples`,
 `getExampleDataset`; GET `/api/examples/:id` maps to `getExample` plus transient
 analysis. The source labels are not treated as confirmed scams. Provenance/license
